@@ -1,0 +1,36 @@
+
+Sub Easy():
+        
+'Set an initial variable for holding the tick name
+    Dim Tick_Name As String
+                
+'Set an initial variable for holding the tick volume per tick name
+    Dim Tick_Volume As Double
+        Tick_Volume = 0
+
+'Set the row for each tick name in the summary table
+    Dim TickSumRow As Integer
+        TickSumRow = 2
+
+'Set Loop through all transactions
+    lastrow = Cells(Rows.Count, 1).End(xlUp).Row
+    For i = 2 To lastrow
+
+'If tick name is not equal to the cell above:
+    If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+        Tick_Name = Cells(i, 1).Value
+        Tick_Volume = Tick_Volume + Cells(i, 7).Value
+        Range("I" & TickSumRow).Value = Tick_Name   'Print the Tick Name in the Summary Table
+        Range("J" & TickSumRow).Value = Tick_Volume 'Print the Tick Volume in the Summary Table
+        TickSumRow = TickSumRow + 1                 'Add one to the summary table
+        Tick_Volume = 0                             
+
+'If tickname is equal the to cell above
+    Else
+        Tick_Volume = Tick_Volume + Cells(i, 7).Value   ' Add to the Brand Total
+    End If
+  Next i
+Range("I1") = "Ticker"
+Range("J1") = "Total Stock Volume"
+End Sub
+        
